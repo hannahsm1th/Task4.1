@@ -1,0 +1,90 @@
+//Set the pins for each light
+const pin_t RED_LED_PIN = D6;
+
+const pin_t ORANGE_LED_PIN = D5;
+
+const pin_t GREEN_LED_PIN = D4;
+
+// The following line is optional, but recommended in most firmware.
+// It allows your code to run before the cloud is connected.
+SYSTEM_THREAD(ENABLED);
+
+// This function is called when the Particle.function is called
+
+int redLEDToggle(String command)
+{
+    if (command.equals("on"))
+    {
+        digitalWrite(RED_LED_PIN, HIGH);
+        return 1;
+    }
+    else if (command.equals("off"))
+    {
+        digitalWrite(RED_LED_PIN, LOW);
+        return 0;
+    }
+    else
+    {
+        // Unknown option
+        return -1;
+    }
+}
+int orangeLEDToggle(String command)
+{
+    if (command.equals("on"))
+    {
+        digitalWrite(ORANGE_LED_PIN, HIGH);
+        return 1;
+    }
+    else if (command.equals("off"))
+    {
+        digitalWrite(ORANGE_LED_PIN, LOW);
+        return 0;
+    }
+    else
+    {
+        // Unknown option
+        return -1;
+    }
+}
+int greenLEDToggle(String command)
+{
+    if (command.equals("on"))
+    {
+        digitalWrite(GREEN_LED_PIN, HIGH);
+        return 1;
+    }
+    else if (command.equals("off"))
+    {
+        digitalWrite(GREEN_LED_PIN, LOW);
+        return 0;
+    }
+    else
+    {
+        // Unknown option
+        return -1;
+    }
+}
+
+// The setup() method is called once when the device boots.
+void setup()
+{
+    // In order to set a pin, you must tell Device OS that the
+    // pin is an OUTPUT pin.
+    // This is often done from setup() since you only need to
+    // do it once.
+    pinMode(RED_LED_PIN, OUTPUT);
+    pinMode(ORANGE_LED_PIN, OUTPUT);
+    pinMode(GREEN_LED_PIN, OUTPUT);
+
+    // This registers a function call. When the function "led"
+    // is called from the cloud, the ledToggle() function above
+    // will be called.
+    Particle.function("redled", redLEDToggle);
+    Particle.function("orangeled", orangeLEDToggle);
+    Particle.function("greenled", greenLEDToggle);
+}
+
+void loop()
+{
+}
